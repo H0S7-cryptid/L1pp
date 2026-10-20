@@ -1,0 +1,10 @@
+N=2000000
+main_threads=4
+max_threads=8
+repeats=5
+hardware_threads=12
+clock=steady_clock
+statistic=median
+warmup=one_per_configuration
+shuffle_seed=412
+timing=allocation+creation+computation+join+reduction

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="520" height="670" preserveAspectRatio="xMinYMin meet" viewBox="0 0 520 670" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="520" height="670"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-670)" style="clip-path: url(#clip)">
+		<g transform="">
+			<circle cx="260" cy="654" r="6" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<path d="M 260,647 L 260,633 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 633, 262.7259 639.4474, 257.2741 639.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<rect x="115" y="596" width="290" height="37" rx="6" ry="6" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(94%,96%,97%); fill-rule: evenodd;"/>
+			<text x="211.712890625" y="617.5" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,1235) scale(1,-1)">Ввод N, p_main, p_max</text>
+			<text x="165.67578125" y="605.5" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,1211) scale(1,-1)">Проверка диапазонов и доступности файлов</text>
+			<path d="M 260,596 L 260,583 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 583, 262.7259 589.4474, 257.2741 589.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<polygon points="260 583, 337 561, 260 539, 183 561" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="224.7294921875" y="558" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,1116) scale(1,-1)">Ввод корректен?</text>
+			<path d="M 337,561 L 385,561 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="385 561, 378.5526 563.7259, 378.5526 558.2741" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<text x="350" y="568" style="font-family: Arial; font-size: 8px;fill: rgb(39%,45%,54%); stroke:none;" transform="translate(0,1136) scale(1,-1)">нет</text>
+			<rect x="385" y="543" width="120" height="36" rx="6" ry="6" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(94%,96%,97%); fill-rule: evenodd;"/>
+			<text x="397.205078125" y="564.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,1128) scale(1,-1)">Сообщение об ошибке</text>
+			<text x="413.330810546875" y="552.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,1104) scale(1,-1)">Код возврата 1</text>
+			<path d="M 445,543 L 445,531 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="445 531, 447.7259 537.4474, 442.2741 537.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<circle cx="445" cy="522" r="8" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<circle cx="445" cy="522" r="5" style="stroke: rgb(0%,0%,0%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<path d="M 260,539 L 260,522 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 522, 262.7259 528.4474, 257.2741 528.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<text x="270" y="529" style="font-family: Arial; font-size: 8px;fill: rgb(39%,45%,54%); stroke:none;" transform="translate(0,1058) scale(1,-1)">да</text>
+			<rect x="105" y="480" width="310" height="42" rx="6" ry="6" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(94%,96%,97%); fill-rule: evenodd;"/>
+			<text x="173.69140625" y="504.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,1008) scale(1,-1)">h = 3/N; прогрев; последовательная база</text>
+			<text x="177.9892578125" y="492.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,984) scale(1,-1)">Выбор API, p и повтора по расписанию</text>
+			<path d="M 260,480 L 260,461 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 461, 262.7259 467.4474, 257.2741 467.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<rect x="110" y="420" width="300" height="41" rx="6" ry="6" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(94%,96%,97%); fill-rule: evenodd;"/>
+			<text x="186.538818359375" y="443.5" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,887) scale(1,-1)">Разбиение N индексов на p блоков</text>
+			<text x="183.607666015625" y="431.5" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,863) scale(1,-1)">Создание p потоков выбранного API</text>
+			<path d="M 260,420 L 260,405 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 405, 262.7259 411.4474, 257.2741 411.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<rect x="80" y="400" width="360" height="5" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<path d="M 150,400 L 150,382 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="150 382, 152.7259 388.4474, 147.2741 388.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<path d="M 370,400 L 370,382 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="370 382, 372.7259 388.4474, 367.2741 388.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<rect x="45" y="324" width="210" height="58" rx="6" ry="6" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(94%,96%,97%); fill-rule: evenodd;"/>
+			<text x="79.34033203124999" y="362.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,724) scale(1,-1)">Поток 0: локальная сумма Кэхэна</text>
+			<text x="119.85791015625" y="350.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,700) scale(1,-1)">x_i = 2 + (i+1)h</text>
+			<text x="88.21728515625" y="338.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,676) scale(1,-1)">Завершение рабочего потока</text>
+			<rect x="280" y="324" width="210" height="58" rx="6" ry="6" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(94%,96%,97%); fill-rule: evenodd;"/>
+			<text x="326.040771484375" y="362.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,724) scale(1,-1)">Поток p-1: локальная сумма</text>
+			<text x="328.418212890625" y="350.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,700) scale(1,-1)">Тот же шаг и свои индексы</text>
+			<text x="323.21728515625" y="338.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,676) scale(1,-1)">Завершение рабочего потока</text>
+			<text x="260.0" y="350" style="font-family: Arial; font-size: 14px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,700) scale(1,-1)">…</text>
+			<path d="M 150,324 L 150,308 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="150 308, 152.7259 314.4474, 147.2741 314.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<path d="M 370,324 L 370,308 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="370 308, 372.7259 314.4474, 367.2741 314.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<rect x="80" y="303" width="360" height="5" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<path d="M 260,303 L 260,287 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 287, 262.7259 293.4474, 257.2741 293.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<rect x="100" y="240" width="320" height="47" rx="6" ry="6" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(94%,96%,97%); fill-rule: evenodd;"/>
+			<text x="207.22607421875" y="272.5" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,545) scale(1,-1)">Ожидание ВСЕХ потоков</text>
+			<text x="166.94140625" y="260.5" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,521) scale(1,-1)">POSIX: pthread_join(handle, &amp;returned_value)</text>
+			<text x="179.845947265625" y="248.5" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,497) scale(1,-1)">std::thread: join(), затем чтение result[t]</text>
+			<path d="M 260,240 L 260,223 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 223, 262.7259 229.4474, 257.2741 229.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<rect x="105" y="185" width="310" height="38" rx="6" ry="6" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(94%,96%,97%); fill-rule: evenodd;"/>
+			<text x="192.73291015625" y="207.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,414) scale(1,-1)">Редукция сумм; I_N = h × сумма</text>
+			<text x="175.490966796875" y="195.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,390) scale(1,-1)">Остановка таймера; сохранение замера</text>
+			<path d="M 260,185 L 260,167 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 167, 262.7259 173.4474, 257.2741 173.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<polygon points="260 167, 344 145, 260 123, 176 145" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="216.916015625" y="142" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,284) scale(1,-1)">Есть конфигурации?</text>
+			<text x="355" y="152" style="font-family: Arial; font-size: 8px;fill: rgb(39%,45%,54%); stroke:none;" transform="translate(0,304) scale(1,-1)">да</text>
+			<polyline points="344 145, 505 145, 505 500, 415 500" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1; fill: None; fill-rule: evenodd;"/>
+			<path d="M 438,500 L 415,500 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="415 500, 421.4474 497.2741, 421.4474 502.7259" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<path d="M 260,123 L 260,105 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 105, 262.7259 111.4474, 257.2741 111.4474" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<text x="270" y="112" style="font-family: Arial; font-size: 8px;fill: rgb(39%,45%,54%); stroke:none;" transform="translate(0,224) scale(1,-1)">нет</text>
+			<rect x="85" y="59" width="350" height="46" rx="6" ry="6" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(94%,96%,97%); fill-rule: evenodd;"/>
+			<text x="151.786865234375" y="91.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,182) scale(1,-1)">Медианы, ускорение, эффективность, погрешность</text>
+			<text x="133.813232421875" y="79.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,158) scale(1,-1)">Отдельные таблицы POSIX, std::thread и основного расчёта</text>
+			<text x="191.531005859375" y="67.0" style="font-family: Arial; font-size: 9px;fill: rgb(8%,19%,30%); stroke:none;" transform="translate(0,134) scale(1,-1)">CSV → шесть графиков → отчёт</text>
+			<path d="M 260,59 L 260,39 Z" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="260 39, 262.7259 45.44743, 257.2741 45.44743" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+			<circle cx="260" cy="29" r="8" style="stroke: rgb(8%,19%,30%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<circle cx="260" cy="29" r="5" style="stroke: rgb(0%,0%,0%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,19%,30%); fill-rule: evenodd;"/>
+		</g>
+	</g>
+</svg>

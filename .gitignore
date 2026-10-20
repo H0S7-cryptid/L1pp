@@ -1,0 +1,6 @@
+.vs/
+x64/
+L1pp/x64/
+build/
+__pycache__/
+output/qa/
