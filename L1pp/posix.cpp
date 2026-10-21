@@ -25,7 +25,7 @@ double join_result(pthread_t thread) {
     const int code = pthread_join(thread, &raw);
     if (code != 0) {
         // Do not unwind storage possibly still used by a live worker.
-        std::cerr << "pthread_join failed: " << code << '\n';
+        std::cerr << "Ошибка ожидания потока pthread_join (код " << code << ").\n";
         std::terminate();
     }
     std::unique_ptr<double> value(static_cast<double*>(raw));
@@ -58,7 +58,7 @@ double posix_integral(Index n, unsigned threads) {
         }
     }
     if (create_error)
-        throw std::runtime_error("pthread_create failed: " + std::to_string(create_error));
+        throw std::runtime_error("Не удалось создать поток pthread_create (код " + std::to_string(create_error) + ")");
     if (allocation_failed) throw std::bad_alloc();
     return sum * h;
 }

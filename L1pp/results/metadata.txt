@@ -1,6 +1,6 @@
-N=2000000
-main_threads=4
-max_threads=8
+N=5
+main_threads=2
+max_threads=4
 repeats=5
 hardware_threads=12
 clock=steady_clock

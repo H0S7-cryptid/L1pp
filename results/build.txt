@@ -1,3 +1,0 @@
-
-  L1pp.vcxproj -> C:\Users\hossst\source\repos\L1pp\x64\Release\L1pp.exe
-  Скопировано файлов:         1.

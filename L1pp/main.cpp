@@ -6,9 +6,11 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <new>
 #include <random>
 #include <stdexcept>
 #include <string>
+#include <system_error>
 #include <thread>
 #include <vector>
 #ifdef _WIN32
@@ -24,15 +26,20 @@ struct Row { int api; unsigned threads; double seconds, value, speedup, efficien
 
 Index number(const std::string& text) {
     if (text.empty() || text.find_first_not_of("0123456789") != std::string::npos)
-        throw std::invalid_argument("Expected a positive integer: " + text);
-    const Index value = std::stoull(text);
-    if (value == 0) throw std::invalid_argument("Expected a positive integer");
+        throw std::invalid_argument("Ожидается положительное целое число: " + text);
+    Index value;
+    try {
+        value = std::stoull(text);
+    } catch (const std::out_of_range&) {
+        throw std::invalid_argument("Введённое число слишком велико: " + text);
+    }
+    if (value == 0) throw std::invalid_argument("Ожидается положительное целое число");
     return value;
 }
 Index input(const char* prompt) {
     std::cout << prompt << std::flush;
     std::string line;
-    if (!std::getline(std::cin, line)) throw std::runtime_error("Input ended");
+    if (!std::getline(std::cin, line)) throw std::runtime_error("Ввод завершён до получения числа");
     return number(line);
 }
 Sample timed(Integrator integrate, Index n, unsigned p) {
@@ -54,7 +61,7 @@ void line() {
 void table(const std::string& title, const std::vector<Row>& rows, int api) {
     std::cout << '\n' << title << '\n';
     line();
-    std::cout << "| Threads | Time, s      | Integral           | Speedup    | Eff., %    |\n";
+    std::cout << "| Потоки  | Время, с     | Интеграл           | Ускорение  | Эффект., % |\n";
     line();
     for (const auto& r : rows) if (r.api == api) {
         std::cout << "| " << std::setw(7) << r.threads << " | "
@@ -70,31 +77,32 @@ void self_test() {
     for (Index n : {Index(1), Index(2), Index(7), Index(31), Index(1000), Index(10000)}) {
         const double serial = lab::sequential(n);
         if (!(serial < ref && ref - serial <= 1.16015625 / static_cast<double>(n)))
-            throw std::runtime_error("Quadrature bound failed");
+            throw std::runtime_error("Нарушена теоретическая граница погрешности");
         for (unsigned p = 1; p <= std::min<Index>(n, 8); ++p) {
             Index previous = 0;
             for (unsigned t = 0; t < p; ++t) {
                 Index first, last;
                 lab::range(n, p, t, first, last);
                 if (first != previous || last <= first)
-                    throw std::runtime_error("Partition failed");
+                    throw std::runtime_error("Ошибка распределения индексов между потоками");
                 previous = last;
             }
-            if (previous != n) throw std::runtime_error("Coverage failed");
+            if (previous != n) throw std::runtime_error("Обработаны не все индексы разбиения");
             for (auto fn : {lab::posix_integral, lab::std_integral})
                 if (std::abs(fn(n, p) - serial) > 2e-14)
-                    throw std::runtime_error("Parallel sum failed");
+                    throw std::runtime_error("Параллельная сумма не совпадает с последовательной");
         }
     }
     const double e1 = ref - lab::sequential(1000), e2 = ref - lab::sequential(2000);
-    if (e1 / e2 < 1.99 || e1 / e2 > 2.01) throw std::runtime_error("Order test failed");
+    if (e1 / e2 < 1.99 || e1 / e2 > 2.01) throw std::runtime_error("Проверка порядка сходимости не пройдена");
     for (auto pair : {std::pair<Index,unsigned>{0,1}, {1,0}, {2,3}, {1000,257}}) {
         bool rejected = false;
         try { lab::validate(pair.first, pair.second); }
         catch (const std::invalid_argument&) { rejected = true; }
-        if (!rejected) throw std::runtime_error("Validation failed");
+        if (!rejected) throw std::runtime_error("Проверка отклонения некорректных параметров не пройдена");
     }
-    std::cout << "PASS: partition, POSIX, std::thread, error bound, convergence, invalid inputs.\n";
+    std::cout << "ПРОВЕРКИ ПРОЙДЕНЫ: распределение индексов, POSIX, std::thread, "
+                 "граница погрешности, сходимость, отклонение некорректного ввода.\n";
 }
 }
 
@@ -106,22 +114,24 @@ int main(int argc, char** argv) {
     try {
         if (argc == 2 && std::string(argv[1]) == "--self-test") { self_test(); return 0; }
         if (argc == 2 && std::string(argv[1]) == "--help") {
-            std::cout << "L1pp [N main_threads max_threads [odd_repeats [output_dir]]]\n"
-                         "No arguments: interactive input. --self-test: correctness checks.\n";
+            std::cout << "Использование:\n"
+                         "L1pp [N потоки_расчёта максимум_потоков [нечётное_число_повторов [папка_результатов]]]\n"
+                         "Без аргументов: интерактивный ввод.\n"
+                         "--self-test: проверка корректности. --help: справка.\n";
             return 0;
         }
-        if (argc != 1 && (argc < 4 || argc > 6)) throw std::invalid_argument("Use --help");
+        if (argc != 1 && (argc < 4 || argc > 6)) throw std::invalid_argument("Для просмотра справки используйте --help");
         std::cout << "ЛАБОРАТОРНАЯ РАБОТА 1. ПРАВЫЕ ПРЯМОУГОЛЬНИКИ\n"
-                     "f(x) = (1+x^2)/(x^3*sqrt(2+x)), [2,5]\n";
+                     "Функция: f(x) = (1+x²)/(x³·√(2+x)), отрезок [2;5]\n";
         const Index n = argc > 1 ? number(argv[1]) : input("Количество разбиений N: ");
-        if (n > 1000000000000ULL) throw std::invalid_argument("N must be in [1, 10^12]");
+        if (n > 1000000000000ULL) throw std::invalid_argument("Число разбиений N должно быть от 1 до 10^12");
         const Index main_input = argc > 1 ? number(argv[2]) : input("Потоки основного вычисления: ");
         const Index max_input = argc > 1 ? number(argv[3]) : input("Максимум потоков для тестирования: ");
         const Index repeats_input = argc > 4 ? number(argv[4]) : 5;
         if (main_input > 256 || max_input > 256)
-            throw std::invalid_argument("Maximum allowed threads: 256");
+            throw std::invalid_argument("Максимально допустимое число потоков: 256");
         if (repeats_input > 99 || repeats_input % 2 == 0)
-            throw std::invalid_argument("Repeats must be odd and in [1,99]");
+            throw std::invalid_argument("Число повторов должно быть нечётным и находиться в диапазоне от 1 до 99");
         const unsigned main_p = static_cast<unsigned>(main_input);
         const unsigned max_p = static_cast<unsigned>(max_input);
         const unsigned repeats = static_cast<unsigned>(repeats_input);
@@ -132,7 +142,7 @@ int main(int argc, char** argv) {
                       main_csv(output / "main.csv"), accuracy(output / "accuracy.csv"),
                       metadata(output / "metadata.txt");
         if (!raw || !summary || !main_csv || !accuracy || !metadata)
-            throw std::runtime_error("Cannot create output files");
+            throw std::runtime_error("Не удалось создать файлы результатов");
         raw << "technology,threads,repeat,seconds,result\n" << std::setprecision(17);
         summary << "technology,threads,seconds,result,speedup,efficiency_percent\n"
                 << std::setprecision(17);
@@ -142,8 +152,9 @@ int main(int argc, char** argv) {
                  << std::setprecision(17);
         const double h = 3.0 / static_cast<double>(n);
         const double reference = lab::reference_integral();
-        std::cout << "\nN=" << n << "; h=" << std::scientific << h << "; main=" << main_p
-                  << "; max=" << max_p << "; repeats=" << repeats << "; hardware="
+        std::cout << "\nЧисло разбиений N=" << n << "; шаг h=" << std::scientific << h
+                  << "; потоки расчёта=" << main_p << "; максимум потоков=" << max_p
+                  << "; повторы=" << repeats << "; логические потоки процессора="
                   << std::thread::hardware_concurrency() << "\n";
         metadata << "N=" << n << "\nmain_threads=" << main_p << "\nmax_threads=" << max_p
                  << "\nrepeats=" << repeats << "\nhardware_threads="
@@ -190,11 +201,14 @@ int main(int argc, char** argv) {
         }
         std::cout << "\nОСНОВНОЕ ВЫЧИСЛЕНИЕ (ускорение относительно прямого последовательного цикла)\n"
                      "+--------------+---------+--------------+--------------------+------------+\n"
-                     "| Technology   | Threads | Time, s      | Integral           | Tseq/Tp    |\n"
+                     "| Реализация   | Потоки  | Время, с     | Интеграл           | Ускорение  |\n"
                      "+--------------+---------+--------------+--------------------+------------+\n";
         const auto main_row = [&](const char* name, unsigned p, Sample s) {
             const double speed = direct.seconds / s.seconds;
-            std::cout << "| " << std::setw(12) << name << " | " << std::setw(7) << p << " | "
+            std::cout << "| ";
+            if (std::string(name) == "direct") std::cout << "Последоват. ";
+            else std::cout << std::setw(12) << name;
+            std::cout << " | " << std::setw(7) << p << " | "
                       << std::fixed << std::setprecision(9) << std::setw(12) << s.seconds << " | "
                       << std::setprecision(15) << std::setw(18) << s.value << " | "
                       << std::setprecision(4) << std::setw(10) << speed << " |\n";
@@ -220,7 +234,7 @@ int main(int argc, char** argv) {
         std::cout << "+--------------+---------+--------------+--------------------+------------+\n";
         std::cout << "\nТОЧНОСТЬ И ШАГ (метод первого порядка, O(h))\n"
                      "+--------------+--------------+--------------------+--------------+--------------+\n"
-                     "| N            | h            | Integral           | Abs. error   | Runge        |\n"
+                     "| Разбиения N  | Шаг h        | Интеграл           | Абс. ошибка  | Оценка Рунге |\n"
                      "+--------------+--------------+--------------------+--------------+--------------+\n";
         std::vector<Index> sizes = {10, 100, 1000, 10000, 100000, 1000000, n};
         std::sort(sizes.begin(), sizes.end());
@@ -240,14 +254,26 @@ int main(int argc, char** argv) {
                       << std::setw(12) << runge << " |\n";
         }
         std::cout << "+--------------+--------------+--------------------+--------------+--------------+\n"
-                  << "Runge оценивает ошибку уточнённого I(2N).\nЭталон: " << std::fixed
+                  << "Оценка Рунге относится к ошибке уточнённого результата I(2N).\nЭталон: " << std::fixed
                   << std::setprecision(16) << reference << "\nГраница ошибки: " << std::scientific
                   << 1.16015625 / static_cast<double>(n)
-                  << "\nДля точности eps: N >= ceil(1.16015625/eps), h=3/N.\nCSV сохранены: "
+                  << "\nДля точности ε: N ≥ ⌈1,16015625/ε⌉, шаг h=3/N.\nФайлы результатов сохранены в папке: "
                   << output.string() << '\n';
         return 0;
-    } catch (const std::exception& e) {
-        std::cerr << "ERROR: " << e.what() << '\n';
+    } catch (const std::bad_alloc&) {
+        std::cerr << "Ошибка: недостаточно памяти для выполнения вычислений.\n";
+        return 1;
+    } catch (const std::system_error& e) {
+        std::cerr << "Ошибка системной операции (код " << e.code().value() << ").\n";
+        return 1;
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Ошибка: " << e.what() << '\n';
+        return 1;
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Ошибка: " << e.what() << '\n';
+        return 1;
+    } catch (const std::exception&) {
+        std::cerr << "Ошибка: не удалось выполнить программу.\n";
         return 1;
     }
 }
