@@ -4,6 +4,7 @@
 #define HAVE_STRUCT_TIMESPEC
 #endif
 #include <pthread.h>
+#include <chrono>
 #include <iostream>
 #include <memory>
 #include <new>
@@ -16,11 +17,18 @@ struct Arguments { Index first, last; double a, h; };
 void* worker(void* raw) {
     const auto& args = *static_cast<Arguments*>(raw);
     // Heap storage stays valid after this worker returns.
-    auto* result = new (std::nothrow) double;
-    if (result) *result = partial_sum(args.first, args.last, args.a, args.h);
+    auto* result = new (std::nothrow) ThreadResult;
+    if (result) {
+        result->first = args.first;
+        result->last = args.last;
+        const auto start = std::chrono::steady_clock::now();
+        result->sum = partial_sum(args.first, args.last, args.a, args.h);
+        const auto stop = std::chrono::steady_clock::now();
+        result->seconds = std::chrono::duration<double>(stop - start).count();
+    }
     return result; // Received by the caller ONLY through pthread_join.
 }
-double join_result(pthread_t thread) {
+ThreadResult join_result(pthread_t thread) {
     void* raw = nullptr;
     const int code = pthread_join(thread, &raw);
     if (code != 0) {
@@ -28,16 +36,17 @@ double join_result(pthread_t thread) {
         std::cerr << "Ошибка ожидания потока pthread_join (код " << code << ").\n";
         std::terminate();
     }
-    std::unique_ptr<double> value(static_cast<double*>(raw));
+    std::unique_ptr<ThreadResult> value(static_cast<ThreadResult*>(raw));
     if (!value) throw std::bad_alloc();
     return *value;
 }
 }
-double posix_integral(Index n, unsigned threads) {
+double posix_integral(Index n, unsigned threads, std::vector<ThreadResult>* details) {
     validate(n, threads);
     const double h = (B - A) / static_cast<double>(n);
     std::vector<pthread_t> handles(threads);
     std::vector<Arguments> args(threads);
+    if (details) details->assign(threads, ThreadResult{});
     unsigned created = 0;
     int create_error = 0;
     for (; created < threads; ++created) {
@@ -50,7 +59,9 @@ double posix_integral(Index n, unsigned threads) {
     bool allocation_failed = false;
     for (unsigned t = 0; t < created; ++t) {
         try {
-            const double y = join_result(handles[t]) - correction;
+            const auto result = join_result(handles[t]);
+            if (details) (*details)[t] = result;
+            const double y = result.sum - correction;
             const double next = sum + y;
             correction = (next - sum) - y; sum = next;
         } catch (const std::bad_alloc&) {

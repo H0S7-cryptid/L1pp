@@ -1,10 +1,10 @@
-N=5
-main_threads=2
-max_threads=4
-repeats=5
+N=20000000
+main_threads=4
+analysis_threads=10
 hardware_threads=12
 clock=steady_clock
-statistic=median
-warmup=one_per_configuration
-shuffle_seed=412
+measurement=single_run
+warmup=none
 timing=allocation+creation+computation+join+reduction
+worker_timing=partial_sum_elapsed_time
+efficiency_percent=clamp(compute_seconds/total_seconds,0,1)*100
