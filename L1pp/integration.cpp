@@ -22,8 +22,8 @@ namespace lab {
     void validate(Index n, unsigned threads) {
         if (n == 0 || n > 2000000000000ULL)
             throw std::invalid_argument("Внутреннее число разбиений должно быть от 1 до 2·10^12");
-        if (threads == 0 || threads > 256 || threads > n)
-            throw std::invalid_argument("Число потоков должно быть от 1 до меньшего из значений N и 256");
+        if (threads == 0 || threads > 256)
+            throw std::invalid_argument("Число потоков должно быть от 1 до 256");
     }
 
     void range(Index n, unsigned threads, unsigned id, Index& first, Index& last) {

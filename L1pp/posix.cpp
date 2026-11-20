@@ -16,61 +16,59 @@ namespace {
 struct Arguments { Index first, last; double a, h; };
 void* worker(void* raw) {
     const auto& args = *static_cast<Arguments*>(raw);
-    // Heap storage stays valid after this worker returns.
-    auto* result = new (std::nothrow) ThreadResult;
-    if (result) {
-        result->first = args.first;
-        result->last = args.last;
-        const auto start = std::chrono::steady_clock::now();
-        result->sum = partial_sum(args.first, args.last, args.a, args.h);
-        const auto stop = std::chrono::steady_clock::now();
-        result->seconds = std::chrono::duration<double>(stop - start).count();
-    }
-    return result; // Received by the caller ONLY through pthread_join.
+
+    auto* result = new (std::nothrow) double;
+    if (result) *result = partial_sum(args.first, args.last, args.a, args.h);
+    return result;
 }
-ThreadResult join_result(pthread_t thread) {
+double join_result(pthread_t thread) {
     void* raw = nullptr;
     const int code = pthread_join(thread, &raw);
     if (code != 0) {
-        // Do not unwind storage possibly still used by a live worker.
         std::cerr << "Ошибка ожидания потока pthread_join (код " << code << ").\n";
         std::terminate();
     }
-    std::unique_ptr<ThreadResult> value(static_cast<ThreadResult*>(raw));
+    std::unique_ptr<double> value(static_cast<double*>(raw));
     if (!value) throw std::bad_alloc();
     return *value;
 }
 }
-double posix_integral(Index n, unsigned threads, std::vector<ThreadResult>* details) {
+double posix_integral(Index n, unsigned threads, double& elapsed_seconds) {
     validate(n, threads);
     const double h = (B - A) / static_cast<double>(n);
     std::vector<pthread_t> handles(threads);
     std::vector<Arguments> args(threads);
-    if (details) details->assign(threads, ThreadResult{});
+    std::vector<double> results(threads);
+    for (unsigned t = 0; t < threads; ++t) {
+        range(n, threads, t, args[t].first, args[t].last);
+        args[t].a = A; args[t].h = h;
+    }
     unsigned created = 0;
     int create_error = 0;
+    const auto start = std::chrono::steady_clock::now();
     for (; created < threads; ++created) {
-        range(n, threads, created, args[created].first, args[created].last);
-        args[created].a = A; args[created].h = h;
         create_error = pthread_create(&handles[created], nullptr, worker, &args[created]);
         if (create_error != 0) break;
     }
-    double sum = 0.0, correction = 0.0;
     bool allocation_failed = false;
     for (unsigned t = 0; t < created; ++t) {
         try {
-            const auto result = join_result(handles[t]);
-            if (details) (*details)[t] = result;
-            const double y = result.sum - correction;
-            const double next = sum + y;
-            correction = (next - sum) - y; sum = next;
+            results[t] = join_result(handles[t]);
         } catch (const std::bad_alloc&) {
             allocation_failed = true;
         }
     }
+    const auto stop = std::chrono::steady_clock::now();
+    elapsed_seconds = std::chrono::duration<double>(stop - start).count();
     if (create_error)
         throw std::runtime_error("Не удалось создать поток pthread_create (код " + std::to_string(create_error) + ")");
     if (allocation_failed) throw std::bad_alloc();
+    double sum = 0.0, correction = 0.0;
+    for (const auto& result : results) {
+        const double y = result - correction;
+        const double next = sum + y;
+        correction = (next - sum) - y; sum = next;
+    }
     return sum * h;
 }
 }
